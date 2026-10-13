@@ -11,6 +11,8 @@ const INSTAGRAM_URL = "https://instagram.com/tamaraa";
    set image: "images/your-photo.jpg". Leave image empty ("")
    to show a pretty placeholder.
    featured: true  → also shows on the Home page.
+   sample: true    → shows a "Sample photo" tag (example photo, not my own
+                     piece yet). Remove it once you use your own photo.
    ========================================================= */
 const CATEGORIES = [
   { id: "hair", name: "Hair Accessories", emoji: "🎀",
@@ -25,22 +27,29 @@ const PRODUCTS = [
   // Hair Accessories
   { name: "Scrunchie Trio – Black, Peach & Maroon", price: 249, category: "hair", sub: "Scrunchies", image: "images/scrunchie-trio-black-peach-maroon.jpg", featured: true },
   { name: "Peach Ruffle Scrunchie", price: 99, category: "hair", sub: "Scrunchies", image: "images/scrunchie-peach.jpg" },
-  { name: "Lavender Ruffle Scrunchie", price: 99, category: "hair", sub: "Scrunchies", image: "images/scrunchie-lavender.jpg" },
+  { name: "Lavender Ruffle Scrunchie", price: 99, category: "hair", sub: "Scrunchies", image: "images/scrunchie-lavender.jpg", featured: true },
   { name: "Rose Pink Ruffle Scrunchie", price: 99, category: "hair", sub: "Scrunchies", image: "images/scrunchie-rose-pink.jpg" },
   { name: "Bubblegum Pink Ruffle Scrunchie", price: 99, category: "hair", sub: "Scrunchies", image: "images/scrunchie-bubblegum-pink.jpg" },
   { name: "Coral Red Ruffle Scrunchie", price: 99, category: "hair", sub: "Scrunchies", image: "images/scrunchie-coral-red.jpg" },
   { name: "Scrunchie Duo – Peach & Purple", price: 179, category: "hair", sub: "Scrunchies", image: "images/scrunchie-duo-peach-purple.jpg" },
   { name: "Scrunchie Duo – Rose & Peach", price: 179, category: "hair", sub: "Scrunchies", image: "images/scrunchie-duo-rose-peach.jpg" },
-  { name: "Daisy Knot Headband", price: 299, category: "hair", sub: "Headbands", image: "", featured: true },
-  { name: "Soft Twist Headband", price: 249, category: "hair", sub: "Headbands", image: "" },
-  { name: "Classic Crochet Bow", price: 149, category: "hair", sub: "Bows", image: "" },
-  { name: "Mini Bow Pair", price: 179, category: "hair", sub: "Bows", image: "" },
-  { name: "Sunflower Hair Clip", price: 129, category: "hair", sub: "Clips", image: "" },
-  { name: "Strawberry Clip Set", price: 199, category: "hair", sub: "Clips", image: "" },
-  { name: "Jasmine Crochet Gajra", price: 349, category: "hair", sub: "Gajra", image: "", featured: true },
+  { name: "Sage Knot Headband", price: 299, category: "hair", sub: "Headbands", image: "images/headband-sage-knot.jpg", sample: true, featured: true },
+  { name: "Mint Lace Headband", price: 279, category: "hair", sub: "Headbands", image: "images/headband-mint-lace.jpg", sample: true },
+  { name: "Navy Shell Headband", price: 279, category: "hair", sub: "Headbands", image: "images/headband-navy-shell.jpg", sample: true },
+  { name: "Green Shell Headband", price: 279, category: "hair", sub: "Headbands", image: "images/headband-green-shell.jpg", sample: true },
+  { name: "Red Pearl Bow", price: 179, category: "hair", sub: "Bows", image: "images/bow-red-pearl.jpg", sample: true, featured: true },
+  { name: "Coral Long-Tail Bow", price: 199, category: "hair", sub: "Bows", image: "images/bow-coral-long-tail.jpg", sample: true },
+  { name: "Maroon Lace Bow", price: 179, category: "hair", sub: "Bows", image: "images/bow-maroon-lace.jpg", sample: true },
+  { name: "Lavender Lace Bow", price: 199, category: "hair", sub: "Bows", image: "images/bow-lavender-lace.jpg", sample: true },
+  { name: "Pastel Rainbow Bow", price: 199, category: "hair", sub: "Bows", image: "images/bow-pastel-rainbow.jpg", sample: true },
+  { name: "Red Cherry Bow", price: 229, category: "hair", sub: "Bows", image: "images/bow-red-cherry.jpg", sample: true },
+  { name: "Pink Polka Dot Bow Clip", price: 149, category: "hair", sub: "Clips", image: "images/clip-pink-polka-bow.jpg", sample: true },
+  { name: "Denim Blue Bow Clip", price: 149, category: "hair", sub: "Clips", image: "images/clip-denim-blue-bow.jpg", sample: true },
+  { name: "Mini Bow Clip & Band Set", price: 349, category: "hair", sub: "Clips", image: "images/clip-mini-bow-set.jpg", sample: true },
+  { name: "Jasmine Crochet Gajra", price: 349, category: "hair", sub: "Gajra", image: "" },
   { name: "Rose & Jasmine Gajra", price: 399, category: "hair", sub: "Gajra", image: "" },
-  { name: "Crochet Rose Flower", price: 89, category: "hair", sub: "Flowers", image: "" },
-  { name: "Tulip Bunch (5 stems)", price: 449, category: "hair", sub: "Flowers", image: "" },
+  { name: "Red Rose Hair Ties (pair)", price: 199, category: "hair", sub: "Flowers", image: "images/flower-red-rose-hair-ties.jpg", sample: true },
+  { name: "Flower Garden Headband", price: 449, category: "hair", sub: "Flowers", image: "images/flower-garden-headband.jpg", sample: true },
 
   // Baby Collection
   { name: "Peach Blossom Baby Frock", price: 899, category: "baby", sub: "Baby Frocks", image: "", featured: true },
@@ -109,6 +118,7 @@ function productCard(p, index) {
         <img src="${src}" alt="${escapeHtml(p.name)}" loading="lazy"
              onerror="this.onerror=null;this.src='${placeholder}'" />
         <span class="tag">${escapeHtml(label)}</span>
+        ${p.sample ? `<span class="tag tag-sample">Sample photo</span>` : ""}
       </div>
       <div class="product-info">
         <h3>${escapeHtml(p.name)}</h3>

@@ -142,6 +142,7 @@ section { padding: 72px 0; }
   font-size: 0.75rem; font-weight: 700;
   padding: 4px 12px; border-radius: 999px;
 }
+.tag-sample { left: auto; right: 12px; background: rgba(91, 70, 80, 0.75); color: var(--white); }
 .product-info { padding: 18px; display: flex; flex-direction: column; gap: 6px; flex: 1; }
 .product-info h3 { font-size: 1.1rem; }
 .price { font-size: 1.25rem; font-weight: 700; color: var(--rose-dark); margin-bottom: 8px; }
