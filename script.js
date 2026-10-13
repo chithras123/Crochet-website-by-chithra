@@ -11,6 +11,8 @@ const INSTAGRAM_URL = "https://instagram.com/tamaraa";
    set image: "images/your-photo.jpg". Leave image empty ("")
    to show a pretty placeholder.
    featured: true  → also shows on the Home page.
+   Products with no photo (image: "") are hidden, and so are categories
+   with no photos yet — add a photo and they show up automatically.
    sample: true    → shows a "Sample photo" tag (example photo, not my own
                      piece yet). Remove it once you use your own photo.
    ========================================================= */
@@ -26,7 +28,7 @@ const CATEGORIES = [
 const PRODUCTS = [
   // Hair Accessories
   { name: "Scrunchie Trio – Black, Peach & Maroon", price: 249, category: "hair", sub: "Scrunchies", image: "images/scrunchie-trio-black-peach-maroon.jpg", featured: true },
-  { name: "Peach Ruffle Scrunchie", price: 99, category: "hair", sub: "Scrunchies", image: "images/scrunchie-peach.jpg" },
+  { name: "Peach Ruffle Scrunchie", price: 99, category: "hair", sub: "Scrunchies", image: "images/scrunchie-peach.jpg", featured: true },
   { name: "Lavender Ruffle Scrunchie", price: 99, category: "hair", sub: "Scrunchies", image: "images/scrunchie-lavender.jpg", featured: true },
   { name: "Rose Pink Ruffle Scrunchie", price: 99, category: "hair", sub: "Scrunchies", image: "images/scrunchie-rose-pink.jpg" },
   { name: "Bubblegum Pink Ruffle Scrunchie", price: 99, category: "hair", sub: "Scrunchies", image: "images/scrunchie-bubblegum-pink.jpg" },
@@ -42,14 +44,14 @@ const PRODUCTS = [
   { name: "Maroon Lace Bow", price: 179, category: "hair", sub: "Bows", image: "images/bow-maroon-lace.jpg", sample: true },
   { name: "Lavender Lace Bow", price: 199, category: "hair", sub: "Bows", image: "images/bow-lavender-lace.jpg", sample: true },
   { name: "Pastel Rainbow Bow", price: 199, category: "hair", sub: "Bows", image: "images/bow-pastel-rainbow.jpg", sample: true },
-  { name: "Red Cherry Bow", price: 229, category: "hair", sub: "Bows", image: "images/bow-red-cherry.jpg", sample: true },
-  { name: "Pink Polka Dot Bow Clip", price: 149, category: "hair", sub: "Clips", image: "images/clip-pink-polka-bow.jpg", sample: true },
+  { name: "Red Cherry Bow", price: 229, category: "hair", sub: "Bows", image: "images/bow-red-cherry.jpg", sample: true, featured: true },
+  { name: "Pink Polka Dot Bow Clip", price: 149, category: "hair", sub: "Clips", image: "images/clip-pink-polka-bow.jpg", sample: true, featured: true },
   { name: "Denim Blue Bow Clip", price: 149, category: "hair", sub: "Clips", image: "images/clip-denim-blue-bow.jpg", sample: true },
   { name: "Mini Bow Clip & Band Set", price: 349, category: "hair", sub: "Clips", image: "images/clip-mini-bow-set.jpg", sample: true },
   { name: "Jasmine Crochet Gajra", price: 349, category: "hair", sub: "Gajra", image: "" },
   { name: "Rose & Jasmine Gajra", price: 399, category: "hair", sub: "Gajra", image: "" },
   { name: "Red Rose Hair Ties (pair)", price: 199, category: "hair", sub: "Flowers", image: "images/flower-red-rose-hair-ties.jpg", sample: true },
-  { name: "Flower Garden Headband", price: 449, category: "hair", sub: "Flowers", image: "images/flower-garden-headband.jpg", sample: true },
+  { name: "Flower Garden Headband", price: 449, category: "hair", sub: "Flowers", image: "images/flower-garden-headband.jpg", sample: true, featured: true },
 
   // Baby Collection
   { name: "Peach Blossom Baby Frock", price: 899, category: "baby", sub: "Baby Frocks", image: "", featured: true },
@@ -76,6 +78,10 @@ const PASTELS = [
   ["#fde2e4", "#fad2e1"], ["#e2ece9", "#cde7dd"], ["#e8e1f5", "#d7cdee"],
   ["#fff1d6", "#ffe3b3"], ["#dbeafe", "#cfe0f7"], ["#fce7f3", "#f9d4e8"],
 ];
+const SHOP_PRODUCTS = PRODUCTS.map((p, i) => ({ p, i })).filter(({ p }) => p.image);
+const SHOP_CATEGORIES = CATEGORIES
+  .filter(c => SHOP_PRODUCTS.some(({ p }) => p.category === c.id))
+  .map(c => ({ ...c, subs: c.subs.filter(s => SHOP_PRODUCTS.some(({ p }) => p.sub === s)) }));
 const CATEGORY_EMOJI = Object.fromEntries(CATEGORIES.map(c => [c.id, c.emoji]));
 
 function escapeHtml(str) {
@@ -137,8 +143,7 @@ const state = { category: "all", sub: "all" };
 
 function renderFeatured() {
   const grid = document.getElementById("featured-grid");
-  grid.innerHTML = PRODUCTS
-    .map((p, i) => ({ p, i }))
+  grid.innerHTML = SHOP_PRODUCTS
     .filter(({ p }) => p.featured)
     .map(({ p, i }) => productCard(p, i))
     .join("");
@@ -146,7 +151,7 @@ function renderFeatured() {
 
 function renderCategoryFilters() {
   const wrap = document.getElementById("category-filters");
-  const items = [{ id: "all", name: "All", emoji: "✨" }, ...CATEGORIES];
+  const items = [{ id: "all", name: "All", emoji: "✨" }, ...SHOP_CATEGORIES];
   wrap.innerHTML = items.map(c => `
     <button class="chip ${state.category === c.id ? "active" : ""}" data-cat="${c.id}" role="tab"
             aria-selected="${state.category === c.id}">
@@ -156,7 +161,7 @@ function renderCategoryFilters() {
 
 function renderSubFilters() {
   const wrap = document.getElementById("sub-filters");
-  const cat = CATEGORIES.find(c => c.id === state.category);
+  const cat = SHOP_CATEGORIES.find(c => c.id === state.category);
   if (!cat || cat.subs.length === 0) {
     wrap.innerHTML = "";
     wrap.hidden = true;
@@ -171,8 +176,7 @@ function renderSubFilters() {
 
 function renderShop() {
   const grid = document.getElementById("shop-grid");
-  const list = PRODUCTS
-    .map((p, i) => ({ p, i }))
+  const list = SHOP_PRODUCTS
     .filter(({ p }) => state.category === "all" || p.category === state.category)
     .filter(({ p }) => state.sub === "all" || p.sub === state.sub);
 
