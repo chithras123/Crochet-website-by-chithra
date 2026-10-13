@@ -14,6 +14,3 @@ To add a new one, put it here with a clear name (e.g. `headband-daisy.jpg`) and 
 - `headband-*`, `bow-*`, `clip-*`, `flower-*` — **sample photos** of other makers' work, used only
   to preview the website. They show a "Sample photo" tag. Replace them with your own photos
   (and remove `sample: true` in `script.js`) before sharing the site widely.
-- `not-used/` — the original screenshots (some that appear to be other people's crochet work from the internet,
-  some with other shops' watermarks). They are not shown on the website. Delete them, or
-  replace them with photos of your own pieces.
