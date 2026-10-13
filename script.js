@@ -23,8 +23,14 @@ const CATEGORIES = [
 
 const PRODUCTS = [
   // Hair Accessories
-  { name: "Pastel Scrunchie Set (3 pcs)", price: 249, category: "hair", sub: "Scrunchies", image: "", featured: true },
-  { name: "Lavender Bliss Scrunchie", price: 99, category: "hair", sub: "Scrunchies", image: "" },
+  { name: "Scrunchie Trio – Black, Peach & Maroon", price: 249, category: "hair", sub: "Scrunchies", image: "images/scrunchie-trio-black-peach-maroon.jpg", featured: true },
+  { name: "Peach Ruffle Scrunchie", price: 99, category: "hair", sub: "Scrunchies", image: "images/scrunchie-peach.jpg" },
+  { name: "Lavender Ruffle Scrunchie", price: 99, category: "hair", sub: "Scrunchies", image: "images/scrunchie-lavender.jpg" },
+  { name: "Rose Pink Ruffle Scrunchie", price: 99, category: "hair", sub: "Scrunchies", image: "images/scrunchie-rose-pink.jpg" },
+  { name: "Bubblegum Pink Ruffle Scrunchie", price: 99, category: "hair", sub: "Scrunchies", image: "images/scrunchie-bubblegum-pink.jpg" },
+  { name: "Coral Red Ruffle Scrunchie", price: 99, category: "hair", sub: "Scrunchies", image: "images/scrunchie-coral-red.jpg" },
+  { name: "Scrunchie Duo – Peach & Purple", price: 179, category: "hair", sub: "Scrunchies", image: "images/scrunchie-duo-peach-purple.jpg" },
+  { name: "Scrunchie Duo – Rose & Peach", price: 179, category: "hair", sub: "Scrunchies", image: "images/scrunchie-duo-rose-peach.jpg" },
   { name: "Daisy Knot Headband", price: 299, category: "hair", sub: "Headbands", image: "", featured: true },
   { name: "Soft Twist Headband", price: 249, category: "hair", sub: "Headbands", image: "" },
   { name: "Classic Crochet Bow", price: 149, category: "hair", sub: "Bows", image: "" },
